@@ -64,6 +64,10 @@ class Scene:
         elif args.dataset == "mp3d":
             print("Found transforms.json file, assuming MP3D data set!")
             scene_info = sceneLoadTypeCallbacks["MP3D"](args.source_path, args.white_background, args.eval, dataset_type = args.dataset)
+
+        elif args.dataset == "mp3d_region":
+            print("Found transforms.json file, assuming MP3D data set!")
+            scene_info = sceneLoadTypeCallbacks["MP3DRegion"](args.source_path, args.white_background, args.eval, dataset_type = args.dataset)
         else:
             assert False, "Could not recognize scene type!"
 

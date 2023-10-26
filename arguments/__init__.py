@@ -73,7 +73,8 @@ class OptimizationParams(ParamGroup):
     def __init__(self, parser):
         self.iterations = 100_000
         # self.position_lr_init = 0.00016
-        self.position_lr_init = 0.000048
+        # self.position_lr_init = 0.000048
+        self.position_lr_init = 4e-6
         # self.position_lr_init = 4e-6
         self.position_lr_final = 4e-8
         # self.position_lr_final = 0.0000016
@@ -83,7 +84,7 @@ class OptimizationParams(ParamGroup):
         self.opacity_lr = 0.05
         # self.scaling_lr = 0.005
         # self.scaling_lr = 0.001
-        self.scaling_lr = 2e-3
+        self.scaling_lr = 1e-3
         self.rotation_lr = 0.001
         self.percent_dense = 0.01
         # self.percent_dense = 1e-5
