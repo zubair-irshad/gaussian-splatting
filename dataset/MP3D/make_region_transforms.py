@@ -12,9 +12,11 @@ folder = '/home/zubairirshad/Downloads/mp3d_single_scene/undistorted_camera_para
 ply_path = '/home/zubairirshad/Downloads/poisson_meshes/17DRP5sb8fy/poisson_meshes/17DRP5sb8fy_11.ply'
 house_path = '/home/zubairirshad/Downloads/house_segmentations/17DRP5sb8fy/house_segmentations/17DRP5sb8fy.house'
 
+
+region_num = 4
 intrinsics, extrinsics =  camera_parameters(folder)
-region_boundaries = load_region_boundaries(house_file = house_path, region_index=0)
-positions, colors, normals = fetchPlyForRegion(ply_file=ply_path, house_file=house_path, region_index=0, mask=False)
+region_boundaries = load_region_boundaries(house_file = house_path, region_index=region_num)
+positions, colors, normals = fetchPlyForRegion(ply_file=ply_path, house_file=house_path, region_index=region_num, mask=False)
 
 # basic_point_cloud = BasicPointCloud(points=positions, colors=colors, normals=normals)
 
@@ -22,8 +24,13 @@ positions, colors, normals = fetchPlyForRegion(ply_file=ply_path, house_file=hou
 
 #Now let's save the basic pointcloud to the region 0 folder under pointcloud folder
 
+
 #Let's create a folder for the region 0
-region_folder = '/home/zubairirshad/Downloads/mp3d_single_scene/regions/17DRP5sb8fy/region_0/pointcloud'
+
+output_folder = '/home/zubairirshad/Downloads/mp3d_single_scene/regions/17DRP5sb8fy'
+region_folder = os.path.join(output_folder, 'region_'+str(region_num)+ '/pointcloud')
+# region_folder = '/home/zubairirshad/Downloads/mp3d_single_scene/regions/17DRP5sb8fy/+'region'+str(region_num)+ '/pointcloud'
+# region_folder = '/home/zubairirshad/Downloads/mp3d_single_scene/regions/17DRP5sb8fy/+'region'+str(region)+ '/pointcloud'
 os.makedirs(region_folder, exist_ok=True)
 
 #Now let's save the basic point cloud
@@ -40,7 +47,8 @@ filtered_extrinsics = filter_poses_by_region(extrinsics, region_boundaries)
 original_images_folder = '/home/zubairirshad/Downloads/mp3d_single_scene/undistorted_color_images/17DRP5sb8fy/undistorted_color_images'
 
 #Let's create a folder for the region 0 images
-region_images_folder = '/home/zubairirshad/Downloads/mp3d_single_scene/regions/17DRP5sb8fy/region_0/images'
+region_images_folder = os.path.join(output_folder, 'region_'+str(region_num)+ '/images')
+#region_images_folder = '/home/zubairirshad/Downloads/mp3d_single_scene/regions/17DRP5sb8fy/region_0/images'
 
 os.makedirs(region_images_folder, exist_ok=True)
 
@@ -53,7 +61,8 @@ for key in filtered_extrinsics.keys():
 
 #Now let's save the extrinsics as transforms.json file with the same keys as the images
 
-pose_folder = '/home/zubairirshad/Downloads/mp3d_single_scene/regions/17DRP5sb8fy/region_0/poses'
+pose_folder = os.path.join(output_folder, 'region_'+str(region_num)+ '/poses')
+#pose_folder = '/home/zubairirshad/Downloads/mp3d_single_scene/regions/17DRP5sb8fy/region_0/poses'
 import json
 
 os.makedirs(pose_folder, exist_ok=True)

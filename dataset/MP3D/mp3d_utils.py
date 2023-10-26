@@ -34,12 +34,15 @@ def camera_parameters(camera_template):
 
 def load_region_boundaries(house_file, region_index):
     boundaries = {}
+    print("region_index", region_index)
     with open(house_file, 'r') as file:
         for line in file:
             parts = line.split()
             if parts[0] == "R":
                 print("parts", parts)
-            if parts and parts[0] == "R" and parts[1] == str(region_index):
+
+                print("parts[1]", parts[1], region_index, int(parts[1]) == int(region_index))
+            if parts and parts[0] == "R" and int(parts[1]) == int(region_index):
                 xlo, ylo, zlo, xhi, yhi, zhi = map(float, parts[9:15])
                 print("xlo, ylo, zlo, xhi, yhi, zhi", xlo, ylo, zlo, xhi, yhi, zhi)
                 boundaries['xlo'] = xlo
