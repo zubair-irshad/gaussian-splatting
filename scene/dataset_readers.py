@@ -452,7 +452,7 @@ def readMP3DInfo(path, white_background, eval, extension=".png", dataset_type = 
 
     print("nerf_normalization", nerf_normalization["radius"], nerf_normalization["translate"])
 
-    ply_path = os.path.join(path, "poisson_meshes/17DRP5sb8fy/poisson_meshes", '17DRP5sb8fy_10.ply')
+    ply_path = os.path.join(path, "poisson_meshes/17DRP5sb8fy/poisson_meshes", '17DRP5sb8fy_9.ply')
     # if not os.path.exists(ply_path):
     #     # Since this data set has no colmap data, we start with random points
     #     num_pts = 100_000
