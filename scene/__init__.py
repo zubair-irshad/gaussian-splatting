@@ -40,11 +40,30 @@ class Scene:
         self.train_cameras = {}
         self.test_cameras = {}
 
-        if os.path.exists(os.path.join(args.source_path, "sparse")):
+        # if os.path.exists(os.path.join(args.source_path, "sparse")):
+        #     scene_info = sceneLoadTypeCallbacks["Colmap"](args.source_path, args.images, args.eval)
+        # elif os.path.exists(os.path.join(args.source_path, "transforms_train.json")):
+        #     print("Found transforms_train.json file, assuming Blender data set!")
+        #     scene_info = sceneLoadTypeCallbacks["Blender"](args.source_path, args.white_background, args.eval)
+        # else:
+        #     assert False, "Could not recognize scene type!"
+
+        # if os.path.exists(os.path.join(args.source_path, "sparse")):
+        if args.dataset == "colmap":
             scene_info = sceneLoadTypeCallbacks["Colmap"](args.source_path, args.images, args.eval)
-        elif os.path.exists(os.path.join(args.source_path, "transforms_train.json")):
+        elif args.dataset == "blender":
+        # elif os.path.exists(os.path.join(args.source_path, "transforms_train.json")):
             print("Found transforms_train.json file, assuming Blender data set!")
-            scene_info = sceneLoadTypeCallbacks["Blender"](args.source_path, args.white_background, args.eval)
+            scene_info = sceneLoadTypeCallbacks["Blender"](args.source_path, args.white_background, args.eval, dataset_type = args.dataset)
+        elif args.dataset == "srn":
+            print("Found transforms_train.json file, assuming SRN data set!")
+            scene_info = sceneLoadTypeCallbacks["SRN"](args.source_path, args.white_background, args.eval,dataset_type = args.dataset)
+        elif args.dataset == "abo":
+            print("Found transforms.json file, assuming ABO data set!")
+            scene_info = sceneLoadTypeCallbacks["ABO"](args.source_path, args.white_background, args.eval, dataset_type = args.dataset)
+        elif args.dataset == "mp3d":
+            print("Found transforms.json file, assuming MP3D data set!")
+            scene_info = sceneLoadTypeCallbacks["MP3D"](args.source_path, args.white_background, args.eval, dataset_type = args.dataset)
         else:
             assert False, "Could not recognize scene type!"
 
