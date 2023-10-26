@@ -73,8 +73,8 @@ class OptimizationParams(ParamGroup):
     def __init__(self, parser):
         self.iterations = 50_000
         # self.position_lr_init = 0.00016
-        # self.position_lr_init = 0.000048
-        self.position_lr_init = 4e-6
+        self.position_lr_init = 0.000048
+        # self.position_lr_init = 4e-6
         self.position_lr_final = 4e-8
         # self.position_lr_final = 0.0000016
         self.position_lr_delay_mult = 0.01
@@ -85,10 +85,10 @@ class OptimizationParams(ParamGroup):
         # self.scaling_lr = 0.001
         self.scaling_lr = 2e-3
         self.rotation_lr = 0.001
-        # self.percent_dense = 0.01
-        self.percent_dense = 1e-5
-        # self.lambda_dssim = 0.2
-        self.lambda_dssim = 0.3
+        self.percent_dense = 0.01
+        # self.percent_dense = 1e-5
+        self.lambda_dssim = 0.2
+        # self.lambda_dssim = 0.3
         self.densification_interval = 100
         self.opacity_reset_interval = 3000
         self.densify_from_iter = 500
