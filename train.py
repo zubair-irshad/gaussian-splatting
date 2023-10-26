@@ -32,10 +32,10 @@ import wandb
 
 wandb.init(project="gaussian-splatting")
 
-def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoint_iterations, checkpoint, debug_from):
+def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoint_iterations, checkpoint, debug_from, exp_name):
     first_iter = 0
     # tb_writer = prepare_output_and_logger(dataset)
-    prepare_output_and_logger(dataset)
+    prepare_output_and_logger(dataset, exp_name)
     gaussians = GaussianModel(dataset.sh_degree)
     scene = Scene(dataset, gaussians)
     gaussians.training_setup(opt)
@@ -134,12 +134,12 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
                 print("\n[ITER {}] Saving Checkpoint".format(iteration))
                 torch.save((gaussians.capture(), iteration), scene.model_path + "/chkpnt" + str(iteration) + ".pth")
 
-def prepare_output_and_logger(args):    
+def prepare_output_and_logger(args, exp_name = None):    
     if not args.model_path:
         if os.getenv('OAR_JOB_ID'):
             unique_str=os.getenv('OAR_JOB_ID')
-        elif args.exp_name is not None:
-            unique_str = args.exp_name
+        elif exp_name is not None:
+            unique_str = exp_name
         else:
             unique_str = str(uuid.uuid4())
         args.model_path = os.path.join("./output/", unique_str[0:10])
@@ -230,9 +230,9 @@ if __name__ == "__main__":
     # Start GUI server, configure and run training
     # for remote training we can disable this
     # network_gui.init(args.ip, args.port)
-    
+
     torch.autograd.set_detect_anomaly(args.detect_anomaly)
-    training(lp.extract(args), op.extract(args), pp.extract(args), args.test_iterations, args.save_iterations, args.checkpoint_iterations, args.start_checkpoint, args.debug_from)
+    training(lp.extract(args), op.extract(args), pp.extract(args), args.test_iterations, args.save_iterations, args.checkpoint_iterations, args.start_checkpoint, args.debug_from, args.exp_name)
 
     # All done
     print("\nTraining complete.")
