@@ -219,7 +219,7 @@ def readCamerasMP3D(path, transformsfile, dataset_type= "mp3d"):
     for idx, frame in enumerate(extrinsics.keys()):
         c2w = extrinsics[frame][0]
         # change from OpenGL/Blender camera axes (Y up, Z back) to COLMAP (Y down, Z forward)
-        c2w[:3, 1:3] *= -1
+        # c2w[:3, 1:3] *= -1
 
         # get the world-to-camera transform and set R, T
         w2c = np.linalg.inv(c2w)
@@ -449,6 +449,8 @@ def readMP3DInfo(path, white_background, eval, extension=".png", dataset_type = 
     test_cam_infos = []
         
     nerf_normalization = getNerfppNorm(train_cam_infos)
+
+    print("nerf_normalization", nerf_normalization["radius"], nerf_normalization["translate"])
 
     ply_path = os.path.join(path, "poisson_meshes/17DRP5sb8fy/poisson_meshes", '17DRP5sb8fy_10.ply')
     # if not os.path.exists(ply_path):
