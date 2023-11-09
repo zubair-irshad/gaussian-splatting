@@ -70,6 +70,27 @@ def filter_poses_by_region(pose_dict, region_boundaries):
 
     return filtered_poses
 
+def transform_poses_pca(poses: dict):
+    """Transforms poses so principal components lie on XYZ axes.
+
+    Args:
+      poses: a (N, 3, 4) array containing the cameras' camera to world transforms.
+
+    Returns:
+      A tuple (poses, transform), with the transformed poses and the applied
+      camera_to_world transforms.
+    """
+
+    #transform each poses with the mean of all poses
+
+    poses_all = np.array(list(poses.values()))
+    translation = poses_all[..., :3, 3]
+    mean_translation = np.mean(translation, axis=0)
+
+    for key, value in poses.items():
+        poses[key][..., :3, 3] -= mean_translation
+    return poses, mean_translation
+
 def fetchPlyForRegion(ply_file, house_file, region_index, mask=False):
     region_boundaries = load_region_boundaries(house_file, region_index)
 

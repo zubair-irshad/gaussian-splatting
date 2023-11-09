@@ -1,19 +1,21 @@
 
 import sys
 sys.path.append('/home/zubairirshad/gaussian-splatting')
-from dataset.MP3D.mp3d_utils import camera_parameters, load_region_boundaries, filter_poses_by_region, fetchPlyForRegion, storePly
+from dataset.MP3D.mp3d_utils import camera_parameters, load_region_boundaries, filter_poses_by_region, fetchPlyForRegion, storePly, transform_poses_pca
 from scene.gaussian_model import BasicPointCloud
 import os
 import numpy as np
 import shutil
 from utils.graphics_utils import getWorld2View2, focal2fov, fov2focal
 
+
+
 folder = '/home/zubairirshad/Downloads/mp3d_single_scene/undistorted_camera_parameters/17DRP5sb8fy/undistorted_camera_parameters/17DRP5sb8fy.conf'
 ply_path = '/home/zubairirshad/Downloads/poisson_meshes/17DRP5sb8fy/poisson_meshes/17DRP5sb8fy_11.ply'
 house_path = '/home/zubairirshad/Downloads/house_segmentations/17DRP5sb8fy/house_segmentations/17DRP5sb8fy.house'
 
 
-region_num = 4
+region_num = 0
 intrinsics, extrinsics =  camera_parameters(folder)
 region_boundaries = load_region_boundaries(house_file = house_path, region_index=region_num)
 positions, colors, normals = fetchPlyForRegion(ply_file=ply_path, house_file=house_path, region_index=region_num, mask=False)
